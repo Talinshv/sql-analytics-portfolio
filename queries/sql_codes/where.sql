@@ -18,6 +18,11 @@
 --WHERE discount IS NULL
 --WHERE discount IS NOT NULL
 
+--Where referee_id <> '2'
+--Where referee_id > '2'
+--Where referee_id < '2'
+--Where referee_id = '2'
+
 --CHeck NULL before using  IN/NOT IN
 	--if data has NULL it wont work
 

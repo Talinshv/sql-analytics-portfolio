@@ -32,6 +32,28 @@ WHERE total_sales > 0
 GROUP BY product_id
 HAVING SUM(total_sales) > 10000;
 
+--HAVING + COUNT()
+--Find product with at least 50 transactions.
+SELECT
+product_id,
+COUNT(transaction_id) AS transaction_count
+FROM sales
+GROUP BY transaction_id
+HAVING COUNT(transaction_id) > 50;
+
+--HAVING + MULTIPLE Condition
+SELECT
+product_id,
+COUNT(transaction_id) AS transaction_count,
+SUM(total_sales) AS total_revenue
+FROM sales
+GROUP BY transaction_id
+HAVING COUNT(transaction_id) >= 50 AND SUM(total_sales)>10000;
+
+
+
+
+
 
 
 

@@ -54,12 +54,3 @@ HAVING COUNT(transaction_id) >= 50 AND SUM(total_sales)>10000;
 
 
 
-
-
-
-SELECT
-*
-FROM sales;
-
-
-

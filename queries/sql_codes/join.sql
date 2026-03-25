@@ -45,9 +45,26 @@ JOIN analytics.products p
 --Aggregation After JOIN | Controlling Row Explosion
 --Total revenue per order?
 SELECT
+  o.order_id,
+  SUM(oi.quantity * p.price) AS order_revenue
+FROM analytics.orders o
+JOIN analytics.order_items oi
+  ON o.order_id = oi.order_id
+JOIN analytics.products p
+  ON oi.product_id = p.product_id
+GROUP BY o.order_id;
 
-
-
+--Hierarchical JOIN | Customer Geography
+--Where is each customer located?
+SELECT
+	co.customer_id,
+	c.city_name,
+	r.region_name,
+	ca.country_name
+FROM analytics.customers co
+JOIN analytics.cities c ON co.city_id = c.city_id
+JOIN analytics.regions r ON c.region_id = r.region_id
+JOIN analytics.countries ca ON r.country_id = ca.country_id;
 
 
 	

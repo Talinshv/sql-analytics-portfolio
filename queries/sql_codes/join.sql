@@ -66,5 +66,31 @@ JOIN analytics.cities c ON co.city_id = c.city_id
 JOIN analytics.regions r ON c.region_id = r.region_id
 JOIN analytics.countries ca ON r.country_id = ca.country_id;
 
+--Spatial JOIN | Geometry Meets Business Data
+--Is a customer physically inside their declared city?
+SELECT
+  c.customer_id,
+  ci.city_name,
+  ST_Within(cl.geom, cb.geom) AS inside_city
+FROM analytics.customers c
+JOIN analytics.customer_locations cl
+  ON c.customer_id = cl.customer_id
+JOIN analytics.cities ci
+  ON c.city_id = ci.city_id
+JOIN analytics.city_boundaries cb
+  ON ci.city_id = cb.city_id;
+--ST_Within(cl.geom, cb.geom) AS inside_city :is related to spatial analysis in the PostGIS plugin.
+--This line asks a logical question of the database: "Is this point exactly inside this boundary?"
+--ST_Within :It takes two inputs and its output is a Boolean value (true/false).
+--First input (cl.geom): The geometry of the customer's location (which is usually a point on the map).
+--Second input (cb.geom): The geometry of the city boundary (which is a polygon).
 
-	
+--Many-to-Many Effect | Why Row Counts Explode
+SELECT COUNT(*) AS joined_rows
+FROM analytics.orders o
+JOIN analytics.order_items oi
+  ON o.order_id = oi.order_id;
+--COUNT(*) counts all rows created after the JOIN operation.
+--The orders table usually contains general information (such as date and customer ID)
+--and the order_items table contains details about each item in that order.
+--We connect the two using order_id, and the database creates a row for each item in each order.

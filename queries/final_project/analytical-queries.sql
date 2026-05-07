@@ -1,6 +1,6 @@
 -- Analytical Queries
 -- QUERY 1
--- What are the top 10 brands by number of listings?
+-- What are the top 5 brands by number of listings?
 
 -- COUNT(*) counts how many listings each brand has
 -- GROUP BY groups the rows by brand before counting
@@ -12,11 +12,11 @@ FROM analytics.fact_perfume_listing f
 JOIN analytics.brand b ON b.brand_id = f.brand_id
 GROUP BY b.brand_name
 ORDER BY total_listings DESC
-LIMIT 10;
+LIMIT 5;
 
 
 -- QUERY 2
--- What are the top 10 brands by total units sold?
+-- What are the top 5 brands by total units sold?
 
 -- SUM(f.sold) adds up all sold units per brand
 -- WHERE f.sold IS NOT NULL skips rows with missing sold data
@@ -28,7 +28,7 @@ JOIN analytics.brand b ON b.brand_id = f.brand_id
 WHERE f.sold IS NOT NULL
 GROUP BY b.brand_name
 ORDER BY total_units_sold DESC
-LIMIT 10;
+LIMIT 5;
 
 
 -- QUERY 3
@@ -47,7 +47,7 @@ JOIN analytics.brand b ON b.brand_id = f.brand_id
 GROUP BY b.brand_name
 HAVING COUNT(*) > 1
 ORDER BY avg_price DESC
-LIMIT 10;
+LIMIT 5;
 
 -- QUERY 4
 -- Within the top 5 brands by listings,
@@ -136,7 +136,7 @@ ORDER BY brand_name, total_units_sold DESC;
 
 -- QUERY 6
 -- What is the average price per brand
--- for the top 10 most listed brands?
+-- for the top 5 most listed brands?
 
 -- This combines listing count WITH average price in one view
 -- Useful to see if popular brands are also expensive or affordable
@@ -150,7 +150,7 @@ FROM analytics.fact_perfume_listing f
 JOIN analytics.brand b ON b.brand_id = f.brand_id
 GROUP BY b.brand_name
 ORDER BY total_listings DESC
-LIMIT 10;
+LIMIT 5;
 
 -- QUERY 7
 -- Which gender has more listings
